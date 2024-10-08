@@ -1,0 +1,64 @@
+<%= link_to "New post", new_post_path, class: "text-blue-600 hover:underline" %>
+<h1 class="text-3xl font-bold text-center my-4">Posts</h1>
+
+<div id="posts" class="max-w-2xl mx-auto space-y-4">
+  <% @posts.each do |post| %>
+    <div class="border border-gray-300 rounded-lg p-4 shadow-lg bg-white">
+      <h2 class="font-semibold text-lg mb-2">Description:</h2>
+      <% truncated_description = post.description.to_plain_text.split[0..99].join(" ") %>
+      <p id="post-description-<%= post.id %>" class="description max-h-16 overflow-hidden transition-all duration-300 ease-in-out">
+        <%= truncated_description %><% if post.description.to_plain_text.split.size > 100 %>...<% end %>
+      </p>
+      <% if post.description.to_plain_text.split.size > 100 %>
+        <button id="toggle-description-<%= post.id %>" class="bg-transparent text-blue-500 underline cursor-pointer p-0 hover:bg-blue-100 transition duration-200">
+          Read more...
+        </button>
+
+      <% end %>
+
+      <% if post.images.any? %>
+        <div class="carousel relative w-full mt-4">
+          <div class="carousel-wrapper overflow-hidden">
+            <div class="flex space-x-4 transition-transform duration-300 ease-in-out" style="width: 100%;">
+              <% post.images.each do |img| %>
+                <div class="carousel-item w-full flex-shrink-0">
+                  <%= image_tag(img, class: "rounded-lg") %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <button class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full p-2" onclick="prevSlide(this)">❮</button>
+          <button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full p-2" onclick="nextSlide(this)">❯</button>
+        </div>
+      <% end %>
+    </div>
+
+    <script>
+      document.getElementById("toggle-description-<%= post.id %>").onclick = function() {
+        const description = document.getElementById("post-description-<%= post.id %>");
+        const fullDescription = "<%= j post.description.to_plain_text %>";
+        
+        if (description.classList.contains("max-h-16")) {
+          description.classList.remove("max-h-16");
+          description.innerText = fullDescription; // Show full description
+          this.innerText = "Read less";
+        } else {
+          description.classList.add("max-h-16");
+          description.innerText = "<%= truncated_description %>..."; // Show truncated description
+          this.innerText = "Read more...";
+        }
+      };
+
+      function prevSlide(button) {
+        const carousel = button.parentElement.querySelector('.carousel-wrapper');
+        carousel.scrollLeft -= carousel.offsetWidth; // Adjust scroll left by one width
+      }
+
+      function nextSlide(button) {
+        const carousel = button.parentElement.querySelector('.carousel-wrapper');
+        carousel.scrollLeft += carousel.offsetWidth; // Adjust scroll right by one width
+      }
+    </script>
+
+  <% end %>
+</div>

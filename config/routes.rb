@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :posts, except: %i[show ]
+  devise_for :users, skip: [:registration]
+  root "homes#index"
 end
