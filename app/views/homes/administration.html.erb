@@ -1,29 +1,33 @@
-<h1 class="page-title">Administrations</h1>
+<div class="relative top-[65px]">
 
-<div class="mt-16 text-center">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-    <% @administrations.each do |administration| %>
-      <!-- Leader Card -->
-      <div class="flex flex-col items-center">
-        <% if administration.image.attached? %>
-          <%= image_tag(administration.image, alt: administration.name, class: "w-48 h-48 object-cover rounded-full shadow-md mb-4") %>
-        <% else %>
-          <div class="w-48 h-48 bg-gray-200 rounded-full mb-4 flex items-center justify-center">
-            <span class="text-gray-500">No Image</span>
-          </div>
-        <% end %>
-        <h3 class="text-xl font-semibold text-gray-800 mb-1"><%= administration.name %></h3>
-        <p class="text-gray-600"><%= administration.degree %></p>
-        <b class="text-gray-600"><%= administration.position %></b>
-        <p class="text-gray-600"><%= administration.department %></p>
-      </div>
-    <% end %>
+  <h1 class="page-title">Administrations</h1>
+
+  <div class="mt-16 text-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <% @administrations.each do |administration| %>
+        <!-- Leader Card -->
+        <div class="flex flex-col items-center">
+          <% if administration.image.attached? %>
+            <%= image_tag(administration.image, alt: administration.name, class: "w-48 h-48 object-cover rounded-full shadow-md mb-4") %>
+          <% else %>
+            <div class="w-48 h-48 bg-gray-200 rounded-full mb-4 flex items-center justify-center">
+              <span class="text-gray-500">No Image</span>
+            </div>
+          <% end %>
+          <h3 class="text-xl font-semibold text-gray-800 mb-1"><%= administration.name %></h3>
+          <p class="text-gray-600"><%= administration.degree %></p>
+          <b class="text-gray-600"><%= administration.position %></b>
+          <p class="text-gray-600"><%= administration.department %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="button-container mt-10">
+    <%= link_to "New Administration", new_administration_path, class: "new-admin-button" %>
   </div>
 </div>
 
-<div class="button-container mt-10">
-  <%= link_to "New Administration", new_administration_path, class: "new-admin-button" %>
-</div>
 
 <style>
   .page-title {
