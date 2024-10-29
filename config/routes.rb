@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :faculties, except: %i[show ]
   resources :administrations, except: %i[index show ]
   resources :posts, except: %i[show ]
   devise_for :users, skip: [:registration]
@@ -11,4 +12,5 @@ Rails.application.routes.draw do
 
   get "overview", to: "homes#overview"
   get "programmes", to: "homes#programmes"
+  get "fee", to: "homes#fee"
 end
