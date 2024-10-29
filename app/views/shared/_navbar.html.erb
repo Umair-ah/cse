@@ -8,6 +8,17 @@
     <div id="navbar-links" class="hidden lg:flex space-x-6 text-lg text-gray-800">
       <a href="#home" class="hover:text-gray-600">Home</a>
 
+      <div class="relative group">
+        <button class="hover:text-gray-600" id="about-button-2">Computer Science & Engineering</button>
+        <div class="hidden absolute mt-3 left-0 py-2 w-48 bg-white rounded-md shadow-lg transition ease-out duration-300 opacity-0 transform scale-95 animate-dropdown group-hover:block" id="about-dropdown-2">
+          <%= link_to "Overview", overview_path, class:"block px-4 py-2 text-gray-800 hover:bg-gray-100" %>
+          <%= link_to "Programmes", programmes_path, class:"block px-4 py-2 text-gray-800 hover:bg-gray-100" %>
+          <%= link_to "Faculty", static_administration_path, class:"block px-4 py-2 text-gray-800 hover:bg-gray-100" %>
+          <%= link_to "Vision & Mission", vision_and_mission_path, class:"block px-4 py-2 text-gray-800 hover:bg-gray-100" %>
+        </div>
+      </div>
+      <%= link_to "Student Activities", posts_path, class:"hover:text-gray-600" %>
+
       <!-- About Us Dropdown -->
       <div class="relative group">
         <button class="hover:text-gray-600" id="about-button">About Us</button>
@@ -18,7 +29,7 @@
           <%= link_to "Vision & Mission", vision_and_mission_path, class:"block px-4 py-2 text-gray-800 hover:bg-gray-100" %>
         </div>
       </div>
-      <%= link_to "Student Activities", posts_path, class:"hover:text-gray-600" %>
+
 
     </div>
 
@@ -36,6 +47,18 @@
   <!-- Mobile Dropdown Menu -->
   <div id="mobile-menu" class="lg:hidden hidden bg-white shadow-md text-gray-800">
     <a href="#home" class="block px-4 py-2">Home</a>
+
+    <button id="about-toggle-2" class="block px-4 py-2 text-left w-full">Computer Science & Engineering</button>
+    <div id="about-submenu-2" class="hidden bg-gray-50">
+      <%= link_to "Overview", overview_path, data:{turbo: false}, class:"block px-6 py-2" %>
+      <%= link_to "Programmes", programmes_path, data:{turbo: false}, class:"block px-6 py-2" %>
+      <%= link_to "Faculty", static_administration_path, data:{turbo: false}, class:"block px-6 py-2" %>
+      <%= link_to "Vision & Mission", vision_and_mission_path, data:{turbo: false}, class:"block px-6 py-2" %>
+    </div>
+
+    <%= link_to "Student Activities", posts_path, data:{turbo: false}, class:"block px-4 py-2" %>
+
+
     <button id="about-toggle" class="block px-4 py-2 text-left w-full">About Us</button>
     <div id="about-submenu" class="hidden bg-gray-50">
       <%= link_to "Management", management_path, data:{turbo: false}, class:"block px-6 py-2" %>
@@ -43,6 +66,7 @@
       <%= link_to "Administration", static_administration_path, data:{turbo: false}, class:"block px-6 py-2" %>
       <%= link_to "Vision & Mission", vision_and_mission_path, data:{turbo: false}, class:"block px-6 py-2" %>
     </div>
+
   </div>
 </nav>
 
@@ -94,9 +118,16 @@
     const burgerIcon = document.getElementById("burger-icon");
     const mobileMenu = document.getElementById("mobile-menu");
     const aboutButton = document.getElementById("about-button");
+    const aboutButton2 = document.getElementById("about-button-2");
+
     const aboutDropdown = document.getElementById("about-dropdown");
+    const aboutDropdown2 = document.getElementById("about-dropdown-2");
+
     const aboutToggle = document.getElementById("about-toggle");
     const aboutSubmenu = document.getElementById("about-submenu");
+
+    const aboutToggle2 = document.getElementById("about-toggle-2");
+    const aboutSubmenu2 = document.getElementById("about-submenu-2");
 
     // Toggle mobile menu visibility with fade animation
     burgerIcon.addEventListener("click", () => {
@@ -108,6 +139,11 @@
     aboutToggle.addEventListener("click", () => {
       aboutSubmenu.classList.toggle("hidden");
       aboutSubmenu.classList.add("animate-fade-in"); // Apply fade-in animation on submenu
+    });
+
+     aboutToggle2.addEventListener("click", () => {
+      aboutSubmenu2.classList.toggle("hidden");
+      aboutSubmenu2.classList.add("animate-fade-in"); // Apply fade-in animation on submenu
     });
 
     // Sticky navbar with shadow on scroll
@@ -134,12 +170,34 @@
       }, 200);
     });
 
+    aboutButton2.addEventListener("mouseenter", () => {
+      aboutDropdown2.classList.remove("hidden");
+      aboutDropdown2.classList.add("animate-dropdown");
+    });
+
+    aboutButton2.addEventListener("mouseleave", (event) => {
+      // Close dropdown after a short delay
+      setTimeout(() => {
+        if (!aboutDropdown2.matches(':hover')) {
+          aboutDropdown2.classList.add("hidden");
+        }
+      }, 200);
+    });
+
     aboutDropdown.addEventListener("mouseenter", () => {
       aboutDropdown.classList.remove("hidden");
     });
 
     aboutDropdown.addEventListener("mouseleave", () => {
       aboutDropdown.classList.add("hidden");
+    });
+
+    aboutDropdown2.addEventListener("mouseenter", () => {
+      aboutDropdown2.classList.remove("hidden");
+    });
+
+    aboutDropdown2.addEventListener("mouseleave", () => {
+      aboutDropdown2.classList.add("hidden");
     });
   });
 

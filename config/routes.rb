@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   get "institute", to: "homes#institute"
   get "administration", to: "homes#administration", as: :static_administration
   get "vision_and_mission", to: "homes#vision_and_mission"
+
+  get "overview", to: "homes#overview"
+  get "programmes", to: "homes#programmes"
 end
