@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :news, except: %i[index show ]
   resources :faculties, except: %i[show ]
   resources :administrations, except: %i[index show ]
   resources :posts, except: %i[show ]
