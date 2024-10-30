@@ -31,8 +31,12 @@ class AdministrationsController < ApplicationController
   # PATCH/PUT /administrations/1 or /administrations/1.json
   def update
     respond_to do |format|
-      if @administration.update(administration_params)
-        format.html { redirect_to request.referrer, notice: "Administration was successfully updated." }
+
+      if @administration.update(administration_params.except("image"))
+        if administration_params["image"].present?
+          @administration.image.attach(administration_params["image"])
+        end
+        format.html { redirect_to static_administration_path, notice: "Updated successfully." }
         format.json { render :show, status: :ok, location: @administration }
       else
         format.html { render :edit, status: :unprocessable_entity }

@@ -40,6 +40,9 @@
               <span><strong>Experience:</strong></span>
               <span class="font-medium"><%= faculty.experience %> years</span>
             </div>
+            <% if current_user %>
+              <%= link_to "Edit", edit_faculty_path(faculty), class:"text-red-500 font-medium" %>
+            <% end %>
           </div>
         </div>
       </div>

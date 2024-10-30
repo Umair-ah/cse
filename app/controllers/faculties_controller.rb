@@ -35,9 +35,12 @@ class FacultiesController < ApplicationController
   # PATCH/PUT /faculties/1 or /faculties/1.json
   def update
     respond_to do |format|
-      if @faculty.update(faculty_params)
-        format.html { redirect_to @faculty, notice: "Faculty was successfully updated." }
-        format.json { render :show, status: :ok, location: @faculty }
+
+      if @faculty.update(faculty_params.reject{ |k| k["image"] })
+        if faculty_params["image"].present?
+          @faculty.image.attach(faculty_params["image"])
+        end
+        redirect_to faculties_path, notice: "updated"
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @faculty.errors, status: :unprocessable_entity }
