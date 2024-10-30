@@ -19,6 +19,8 @@
     <% end %>
   </div>
 
-  <!-- New Batch Button -->
-  <%= link_to "New batch", new_batch_path, class: "inline-block bg-indigo-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200" %>
+  <% if current_user %>
+    <!-- New Batch Button -->
+    <%= link_to "New batch", new_batch_path, class: "inline-block bg-indigo-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200" %>
+  <% end %>
 </div>
