@@ -1,5 +1,7 @@
 class AdministrationsController < ApplicationController
   before_action :set_administration, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+
 
 
   # GET /administrations/new
