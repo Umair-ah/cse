@@ -78,3 +78,4 @@ end
 gem "devise"
 gem 'roo'
 gem 'hirb'
+gem 'bcrypt'

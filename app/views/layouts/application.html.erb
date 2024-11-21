@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Cse</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "filepond", "data-turbo-track": "reload" %>
+<head>
+  <title>Cse</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "filepond", "data-turbo-track": "reload" %>
 
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-  <body>
-    <%= render "shared/navbar" %>
-    <%= yield %>
-  </body>
+</head>
+
+<body>
+  <% if notice.present? %>
+  <%= notice %>
+  <% elsif alert.present? %>
+  <%= alert %>
+  <% end %>
+
+  <%= render "shared/navbar" %>
+  <%= yield %>
+</body>
+
 </html>

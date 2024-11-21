@@ -5,22 +5,23 @@
   <!-- Batches List -->
   <div id="batches" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">
     <% @batches.each do |batch| %>
-      <div class="p-6 rounded-lg shadow-lg bg-white transition-transform transform hover:scale-105">
-        <h2 class="text-2xl font-medium text-gray-700 mb-4"><%= batch.year %></h2>
+    <div class="p-6 rounded-lg shadow-lg bg-white transition-transform transform hover:scale-105">
+      <h2 class="text-2xl font-medium text-gray-700 mb-4"><%= batch.year %></h2>
 
-        <div class="flex flex-col items-center">
-          <%= link_to "Show this batch", batch, class: "text-purple-600 hover:text-purple-400 font-medium text-lg" %>
-          <% if current_user %>
-            <%= link_to "Edit this batch", edit_batch_path(batch), class: "text-red-600 hover:text-red-400 font-medium text-lg" %>
-          <% end %>
-        </div>
-
+      <div class="flex flex-col items-center">
+        <%= link_to "Show this batch", batch, class: "text-purple-600 hover:text-purple-400 font-medium text-lg" %>
+        <% if current_user %>
+        <%= link_to "Edit this batch", edit_batch_path(batch), class: "text-red-600 hover:text-red-400 font-medium text-lg" %>
+        <% end %>
       </div>
+
+    </div>
     <% end %>
   </div>
 
   <% if current_user %>
-    <!-- New Batch Button -->
-    <%= link_to "New batch", new_batch_path, class: "inline-block bg-indigo-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200" %>
+  <%= link_to "Upload Guides", upload_guides_path %>
+  <!-- New Batch Button -->
+  <%= link_to "New batch", new_batch_path, class: "inline-block bg-indigo-600 text-white py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-200" %>
   <% end %>
 </div>

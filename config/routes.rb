@@ -5,11 +5,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :guides, only: :show do
+  resources :guides, only: %i[show create destroy] do
     collection do
       post :upload
+      get :display_guides
+      get :guide_login
+      get :guide_logged_in
+      get :display_students_of_guide
     end
   end
+  
   resources :news, except: %i[index show ]
   resources :faculties, except: %i[show ]
   resources :administrations, except: %i[index show ]

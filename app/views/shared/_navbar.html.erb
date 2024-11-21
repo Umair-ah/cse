@@ -35,6 +35,15 @@
           <%= link_to "Vision & Mission", vision_and_mission_path, class:"block px-4 py-2 text-gray-800 hover:bg-gray-100" %>
         </div>
       </div>
+      <% if session[:guide_id] %>
+      <%= link_to "My Students", display_students_of_guide_guides_path, class:"hover:text-gray-600" %>
+      <%= button_to "Log Out", guide_path(session[:guide_id]), method: :delete %>
+      <% else %>
+
+      <%= link_to "Guides Only", display_guides_guides_path, class:"hover:text-gray-600" %>
+      <% end %>
+      <%= session[:guide_id] %>
+
 
 
     </div>
