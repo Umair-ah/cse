@@ -4,6 +4,12 @@ Rails.application.routes.draw do
       post :upload
     end
   end
+
+  resources :guides, only: :show do
+    collection do
+      post :upload
+    end
+  end
   resources :news, except: %i[index show ]
   resources :faculties, except: %i[show ]
   resources :administrations, except: %i[index show ]

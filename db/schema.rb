@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_30_053728) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_21_070726) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_30_053728) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "guides", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "news", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
@@ -93,10 +99,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_30_053728) do
   create_table "students", force: :cascade do |t|
     t.string "usn"
     t.string "name"
-    t.bigint "batch_id", null: false
+    t.bigint "batch_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["batch_id"], name: "index_students_on_batch_id"
+  end
+
+  create_table "students_guides", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "guide_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guide_id"], name: "index_students_guides_on_guide_id"
+    t.index ["student_id"], name: "index_students_guides_on_student_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,4 +129,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_30_053728) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "students", "batches"
+  add_foreign_key "students_guides", "guides"
+  add_foreign_key "students_guides", "students"
 end
