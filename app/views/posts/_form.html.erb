@@ -1,28 +1,26 @@
-<%= form_with(model: post, html: { class: "max-w-2xl mx-auto p-4 bg-white rounded-lg shadow-md" }) do |form| %>
-  <% if post.errors.any? %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-      <h2 class="font-bold"><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-      <ul class="list-disc list-inside">
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="mb-6">
-    <%= form.label :description, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-    <%= form.rich_text_area :description %>
-  </div>
-
-  <div class="mb-6">
-    <%= form.label :images, class: "block text-gray-700 text-sm font-semibold mb-2" %>
-    <%= form.file_field :images, multiple: true, class: "border border-gray-300 rounded-md w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-500", id: "files-upload" %>
-  </div>
-
-  <div>
-    <%= form.submit "Submit", class: "w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-  </div>
+<%= form_with(model: post, html: { class: "max-w-2xl mx-auto p-4 " }) do |form| %>
+<% if post.errors.any? %>
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+  <h2 class="font-bold"><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+  <ul class="list-disc list-inside">
+    <% post.errors.each do |error| %>
+    <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
 
+<div class="mb-6">
+  <%= form.label :description, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+  <%= form.rich_text_area :description %>
+</div>
 
+<div class="mb-6">
+  <%= form.label :images, class: "block text-gray-700 text-sm font-semibold mb-2" %>
+  <%= form.file_field :images, multiple: true, class: "border border-gray-300 rounded-md w-full p-2 focus:outline-none focus:ring-2 focus:ring-cyan-500", id: "files-upload" %>
+</div>
+
+<div>
+  <%= form.submit "Submit", class: "w-full bg-cyan-600 text-white font-semibold py-2 rounded-md hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+</div>
+<% end %>

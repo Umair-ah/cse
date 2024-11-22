@@ -1,95 +1,95 @@
 <div class="relative top-20">
   <% if current_user %>
-    <div class="grid place-items-center">
-      <%= link_to "Add New Student Activity", new_post_path, class:"p-2 rounded-lg bg-rose-500 hover:bg-rose-700 transition:ease-in duration-300 text-white my-3" %>
-    </div>
+  <div class="grid place-items-center">
+    <%= link_to "Add New Student Activity", new_post_path, class:"p-2 rounded-lg bg-cyan-500 hover:bg-cyan-700 transition:ease-in duration-300 text-white my-3" %>
+  </div>
   <% end %>
 
   <h1 class="text-3xl font-bold text-center my-4">Our Students Activities</h1>
 
   <div id="posts" class="max-w-2xl mx-auto space-y-4">
     <% @posts.each do |post| %>
-      <div class="border border-gray-300 rounded-lg p-4 shadow-lg bg-white">
-        <h2 class="font-semibold text-lg mb-2">Description:</h2>
-        <% truncated_description = post.description.to_plain_text.split[0..99].join(" ") %>
-        <p id="post-description-<%= post.id %>" class="description max-h-16 overflow-hidden transition-all duration-300 ease-in-out">
-          <%= truncated_description %><% if post.description.to_plain_text.split.size > 100 %>...<% end %>
-        </p>
-        <% if post.description.to_plain_text.split.size > 100 %>
-          <button id="toggle-description-<%= post.id %>" class="bg-transparent text-blue-500 underline cursor-pointer p-0 hover:bg-blue-100 transition duration-200">
-            Read more...
-          </button>
-        <% end %>
+    <div class="border-x-4 border-cyan-500 shadow-lg rounded-lg p-6 space-y-4 my-5 p-4 bg-white">
+      <h2 class="font-semibold text-lg mb-2">Description: <% if current_user %><%= link_to "Edit", edit_post_path(post), class:"text-red-500 hover:text-red-400" %><% end %></h2>
+      <% truncated_description = post.description.to_plain_text.split[0..99].join(" ") %>
+      <p id="post-description-<%= post.id %>" class="description max-h-16 overflow-hidden transition-all duration-300 ease-in-out">
+        <%= truncated_description %><% if post.description.to_plain_text.split.size > 100 %>...<% end %>
+      </p>
+      <% if post.description.to_plain_text.split.size > 100 %>
+      <button id="toggle-description-<%= post.id %>" class="bg-transparent text-blue-500 underline cursor-pointer p-0 hover:bg-blue-100 transition duration-200">
+        Read more...
+      </button>
+      <% end %>
 
-        <% if post.images.any? %>
-          <div class="carousel relative w-full mt-4">
-            <div class="carousel-wrapper overflow-hidden">
-              <div class="flex space-x-4 transition-transform duration-300 ease-in-out" style="width: 100%;">
-                <% post.images.each_with_index do |img, index| %>
-                  <div class="carousel-item w-full flex-shrink-0 cursor-pointer">
-                    <%= image_tag(img, class: "rounded-lg shadow-md", onclick: "showModal('#{post.id}', '#{rails_blob_path(img)}')") %>
-                  </div>
-                <% end %>
-              </div>
+      <% if post.images.any? %>
+      <div class="carousel relative w-full mt-4">
+        <div class="carousel-wrapper overflow-hidden">
+          <div class="flex space-x-4 transition-transform duration-300 ease-in-out" style="width: 100%;">
+            <% post.images.each_with_index do |img, index| %>
+            <div class="carousel-item w-full flex-shrink-0 cursor-pointer">
+              <%= image_tag(img, class: "rounded-lg shadow-md", onclick: "showModal('#{post.id}', '#{rails_blob_path(img)}')") %>
             </div>
-            <button class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full p-2" onclick="prevSlide(this)">❮</button>
-            <button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full p-2" onclick="nextSlide(this)">❯</button>
-          </div>
-        <% end %>
-
-        <!-- Image Modal for each post -->
-        <div id="imageModal-<%= post.id %>" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
-          <div class="relative">
-            <!-- Close Button in Modal -->
-            <button onclick="closeModal('<%= post.id %>')" class="absolute top-4 right-4 text-white text-2xl bg-gray-800 bg-opacity-70 rounded-full p-1 cursor-pointer z-50">✕</button>
-            <img id="modalImage-<%= post.id %>" src="" alt="Preview" class="max-w-full max-h-screen object-contain rounded-lg shadow-2xl transition-transform duration-200 ease-in-out transform hover:scale-105">
+            <% end %>
           </div>
         </div>
+        <button class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full p-2" onclick="prevSlide(this)">❮</button>
+        <button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white text-gray-700 rounded-full p-2" onclick="nextSlide(this)">❯</button>
       </div>
+      <% end %>
 
-      <script>
-        // Toggle description script
-        document.getElementById("toggle-description-<%= post.id %>").onclick = function() {
-          const description = document.getElementById("post-description-<%= post.id %>");
-          const fullDescription = "<%= j post.description.to_plain_text %>";
-          
-          if (description.classList.contains("max-h-16")) {
-            description.classList.remove("max-h-16");
-            description.innerText = fullDescription; // Show full description
-            this.innerText = "Read less";
-          } else {
-            description.classList.add("max-h-16");
-            description.innerText = "<%= truncated_description %>..."; // Show truncated description
-            this.innerText = "Read more...";
-          }
-        };
+      <!-- Image Modal for each post -->
+      <div id="imageModal-<%= post.id %>" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50">
+        <div class="relative">
+          <!-- Close Button in Modal -->
+          <button onclick="closeModal('<%= post.id %>')" class="absolute top-4 right-4 text-white text-2xl bg-gray-800 bg-opacity-70 rounded-full p-1 cursor-pointer z-50">✕</button>
+          <img id="modalImage-<%= post.id %>" src="" alt="Preview" class="max-w-full max-h-screen object-contain rounded-lg shadow-2xl transition-transform duration-200 ease-in-out transform hover:scale-105">
+        </div>
+      </div>
+    </div>
 
-        // Carousel slide functions
-        function prevSlide(button) {
-          const carousel = button.parentElement.querySelector('.carousel-wrapper');
-          carousel.scrollLeft -= carousel.offsetWidth; // Adjust scroll left by one width
+    <script>
+      // Toggle description script
+      document.getElementById("toggle-description-<%= post.id %>").onclick = function() {
+        const description = document.getElementById("post-description-<%= post.id %>");
+        const fullDescription = "<%= j post.description.to_plain_text %>";
+
+        if (description.classList.contains("max-h-16")) {
+          description.classList.remove("max-h-16");
+          description.innerText = fullDescription; // Show full description
+          this.innerText = "Read less";
+        } else {
+          description.classList.add("max-h-16");
+          description.innerText = "<%= truncated_description %>..."; // Show truncated description
+          this.innerText = "Read more...";
         }
+      };
 
-        function nextSlide(button) {
-          const carousel = button.parentElement.querySelector('.carousel-wrapper');
-          carousel.scrollLeft += carousel.offsetWidth; // Adjust scroll right by one width
-        }
+      // Carousel slide functions
+      function prevSlide(button) {
+        const carousel = button.parentElement.querySelector('.carousel-wrapper');
+        carousel.scrollLeft -= carousel.offsetWidth; // Adjust scroll left by one width
+      }
 
-        // Modal functions for each post
-        function showModal(postId, imgSrc) {
-          const modal = document.getElementById(`imageModal-${postId}`);
-          const modalImage = document.getElementById(`modalImage-${postId}`);
-          modalImage.src = imgSrc;
-          modal.classList.remove("hidden");
-        }
+      function nextSlide(button) {
+        const carousel = button.parentElement.querySelector('.carousel-wrapper');
+        carousel.scrollLeft += carousel.offsetWidth; // Adjust scroll right by one width
+      }
 
-        function closeModal(postId) {
-          const modal = document.getElementById(`imageModal-${postId}`);
-          const modalImage = document.getElementById(`modalImage-${postId}`);
-          modal.classList.add("hidden");
-          modalImage.src = ""; // Clear the image when the modal is closed
-        }
-      </script>
+      // Modal functions for each post
+      function showModal(postId, imgSrc) {
+        const modal = document.getElementById(`imageModal-${postId}`);
+        const modalImage = document.getElementById(`modalImage-${postId}`);
+        modalImage.src = imgSrc;
+        modal.classList.remove("hidden");
+      }
+
+      function closeModal(postId) {
+        const modal = document.getElementById(`imageModal-${postId}`);
+        const modalImage = document.getElementById(`modalImage-${postId}`);
+        modal.classList.add("hidden");
+        modalImage.src = ""; // Clear the image when the modal is closed
+      }
+    </script>
 
     <% end %>
   </div>
