@@ -52,7 +52,7 @@
             <span class="text-red-600 text-lg font-bold">No Guide</span>
 
             <% end %>
-            <%= f.collection_select :guide_id, Guide.order(:name), :id, :name, prompt: "Update Guide" %>
+            <%= f.collection_select :guide_id, Guide.order(:name), :id, :name, prompt: "Change Guide?" %>
             <%= f.hidden_field :student_id, value: student.id %>
 
             <%= f.submit "Save", class: "ml-2 bg-red-600 text-white p-1 hover:cursor-pointer" %>

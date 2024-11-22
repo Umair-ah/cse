@@ -27,10 +27,11 @@ class BatchesController < ApplicationController
         # Extract USN and NAME from the current row
         usn = row_data[1] # Assuming USN is in the second column (index 1)
         name = row_data[2] # Assuming NAME is in the third column (index 2)
+
   
         # Check if both USN and NAME are present
         if usn.present? && name.present?
-          student = Student.find_or_create_by!(usn: usn.to_s.strip, name: name.to_s.strip, batch_id: params[:batch_id])
+          student = Student.find_or_create_by!(usn: usn&.to_s&.strip&.upcase, name: name&.to_s&.strip&.upcase, batch_id: params[:batch_id])
         end
       end
   

@@ -54,31 +54,30 @@ class GuidesController < ApplicationController
   def upload
     begin
       if (params[:category] == "mini") || (params[:category] == "major")    
-        file_path = params[:file].path # Assuming you're uploading the Excel file
+        file_path = params[:file].path 
 
-        # Open the Excel file
         workbook = Roo::Spreadsheet.open(file_path)
 
-        # Access the first sheet
         sheet = workbook.sheet(0)
 
-        # Iterate through rows, starting from the second row (assuming headers in the first row)
         sheet.each_row_streaming(offset: 1) do |row|
-          # Safely extract USNs and guide name, checking for nil values
-          usn1 = row[1]&.value
-          usn2 = row[3]&.value
-          usn3 = row[5]&.value
-          guide_name = row[7]&.value
+         
+          usn1 = row[1]&.value&.strip&.upcase
+          usn2 = row[3]&.value&.strip&.upcase
+          usn3 = row[5]&.value&.strip&.upcase
+          guide_name = row[7]&.value&.strip&.upcase
 
-          # Skip if guide_name is blank
+
           next if guide_name.blank?
 
-          # Process each student and associate them with the guide
-          [usn1, usn2, usn3].compact.each do |usn| # Skip nil values
+          [usn1, usn2, usn3].compact.each do |usn| 
             
             begin
-              student = Student.find_by!(usn: usn) # Using find_by! to explicitly raise an error if not found
-              # Build or associate guide
+              puts "Student USN: #{usn1}"
+              puts "Student USN: #{usn2}"
+              puts "Student USN: #{usn3}"
+              student = Student.find_by!(usn: usn) 
+
               guide = Guide.find_or_create_by!(name: guide_name) do |guide|
                 guide.password = "pda123"
               end
