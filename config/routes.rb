@@ -36,4 +36,7 @@ Rails.application.routes.draw do
   get "overview", to: "homes#overview"
   get "programmes", to: "homes#programmes"
   get "fee", to: "homes#fee"
+
+
+  post "search", to: "batches#search", as: :search
 end

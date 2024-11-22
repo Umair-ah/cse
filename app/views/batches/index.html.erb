@@ -2,6 +2,15 @@
   <!-- Title -->
   <h1 class="text-4xl font-semibold text-gray-900 mb-10">Batches</h1>
 
+  <%= form_with url: search_path, method: :post do |f| %>
+  <%= f.search_field :query, placeholder: "Enter USN" %>
+  <%= f.submit "Submit" %>
+  <% end %>
+
+  <div id="usn_query">
+
+  </div>
+
   <!-- Batches List -->
   <div id="batches" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">
     <% @batches.each do |batch| %>

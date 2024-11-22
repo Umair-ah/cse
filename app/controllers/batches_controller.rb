@@ -3,6 +3,27 @@ class BatchesController < ApplicationController
   before_action :authenticate_user!, except: %i[ show index ]
 
 
+  def search
+    begin
+      usn_query = params[:query]&.to_s&.strip&.upcase
+      @student = Student.find_by(usn: usn_query)
+
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream:
+          turbo_stream.update(
+            "usn_query",
+            partial: "shared/usn_query"
+          )
+        end
+      end
+    rescue StandardError => e
+      redirect_to batches_path, alert: "Not FOund"
+    end
+
+  end 
+
+
 
   # GET /batches or /batches.json
   def index
