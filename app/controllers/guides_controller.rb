@@ -53,60 +53,66 @@ class GuidesController < ApplicationController
 
   def upload
     begin
-      if (params[:category] == "mini") || (params[:category] == "major")    
-        file_path = params[:file].path 
+        
+      file_path = params[:file].path 
 
-        workbook = Roo::Spreadsheet.open(file_path)
-
-        sheet = workbook.sheet(0)
-
-        sheet.each_row_streaming(offset: 1) do |row|
-         
-          usn1 = row[1]&.value&.strip&.upcase
-          usn2 = row[3]&.value&.strip&.upcase
-          usn3 = row[5]&.value&.strip&.upcase
-          guide_name = row[7]&.value&.strip&.upcase
+      if !file_path.present? || !params[:category].in?(['mini', 'major'])
+        raise NameError, "Upload Excel Guide List and Select Project Type (Mini or Major)!"
+      end
 
 
-          next if guide_name.blank?
+      workbook = Roo::Spreadsheet.open(file_path)
 
-          [usn1, usn2, usn3].compact.each do |usn| 
-            
-            begin
-              puts "Student USN: #{usn1}"
-              puts "Student USN: #{usn2}"
-              puts "Student USN: #{usn3}"
-              student = Student.find_by!(usn: usn) 
+      sheet = workbook.sheet(0)
 
-              guide = Guide.find_or_create_by!(name: guide_name) do |guide|
-                guide.password = "pda123"
-              end
-              StudentsGuide.find_or_create_by!(student: student, guide: guide)
+      sheet.each_row_streaming(offset: 1) do |row|
+        
+        usn1 = row[1]&.value&.strip&.upcase
+        usn2 = row[3]&.value&.strip&.upcase
+        usn3 = row[5]&.value&.strip&.upcase
+        guide_name = row[7]&.value&.strip&.upcase
 
-              if params[:category] == "mini"
 
-                mini_project = Project.find_or_create_by!(title: "Mini Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
-                StudentsProject.find_or_create_by!(student: student, project: mini_project)
-              elsif params[:category] == "major"
+        next if guide_name.blank?
 
-                major_project = Project.find_or_create_by!(title: "Major Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
-                StudentsProject.find_or_create_by!(student: student, project: major_project)
-              end
-              
+        [usn1, usn2, usn3].compact.each do |usn| 
+          
+          begin
+        
+            student = Student.find_by!(usn: usn) 
 
-            rescue ActiveRecord::RecordNotFound
-              Rails.logger.warn "Student with USN #{usn} not found"
-            rescue ActiveRecord::RecordInvalid => e
-              Rails.logger.warn "Validation failed: #{e.message}"
+            guide = Guide.find_or_create_by!(name: guide_name) do |guide|
+              guide.password = "pda123"
             end
-          end
-      end
-      end
+            StudentsGuide.find_or_create_by!(student: student, guide: guide)
 
-      redirect_to request.referrer, notice: "SUccess"
+            if params[:category] == "mini"
+
+              mini_project = Project.find_or_create_by!(title: "Mini Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
+              StudentsProject.find_or_create_by!(student: student, project: mini_project)
+            elsif params[:category] == "major"
+
+              major_project = Project.find_or_create_by!(title: "Major Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
+              StudentsProject.find_or_create_by!(student: student, project: major_project)
+            end
+            
+
+          rescue ActiveRecord::RecordNotFound
+            Rails.logger.warn "Student with USN #{usn} not found"
+          rescue ActiveRecord::RecordInvalid => e
+            Rails.logger.warn "Validation failed: #{e.message}"
+          end
+        end
+      end
+      redirect_to request.referrer, notice: "Success!"
+
 
     rescue ActiveRecord::NotNullViolation => e
       flash[:alert] = "Failed to upload, make sure to create batch and then upload."
+      redirect_to request.referrer
+
+    rescue NameError => e
+      flash[:alert] = "Upload Excel Guide List and Select Project Type (Mini or Major)!"
       redirect_to request.referrer
     end
 
