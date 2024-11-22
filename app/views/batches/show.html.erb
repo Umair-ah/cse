@@ -1,5 +1,5 @@
 <div class="relative top-20 px-8 py-10 bg-gray-50">
-  <div class="max-w-xl mx-auto text-center">
+  <div class="mx-auto text-center">
     <%= link_to "back", batches_path, class:"text-rose-600 text-center text-lg"%>
 
     <% if current_user %>
@@ -24,7 +24,7 @@
 
     <% if @batch_students.present? %>
     <h2 class="text-2xl font-bold text-gray-800 my-6">Batch Year - <%= @batch.year %></h2>
-    <table class="min-w-full border border-gray-300">
+    <table class="border border-gray-300">
       <thead class="bg-gray-200">
         <tr>
           <th class="px-4 py-2 border border-gray-300">USN</th>
@@ -41,6 +41,56 @@
           <td class="px-4 py-2 border border-gray-300"><%= student.name %></td>
           <td class="px-4 py-2 border border-gray-300"><%= student.mini %></td>
           <td class="px-4 py-2 border border-gray-300"><%= student.major %></td>
+          <% if current_user %>
+          <td class="px-4 py-2 border border-gray-300">
+            <%= form_with(url: update_guide_guides_path, method: :post, local: true) do |f| %>
+
+
+            <% if student.guide %>
+            <span class="text-purple-600 text-lg font-bold">Current guide: <%= student.guide.name if student.guide %></span>
+            <% else %>
+            <span class="text-red-600 text-lg font-bold">No Guide</span>
+
+            <% end %>
+            <%= f.collection_select :guide_id, Guide.order(:name), :id, :name, prompt: "Update Guide" %>
+            <%= f.hidden_field :student_id, value: student.id %>
+
+            <%= f.submit "Save", class: "ml-2 bg-red-600 text-white p-1 hover:cursor-pointer" %>
+            <% end %>
+          </td>
+
+          <% if !student.projects.present? %>
+          <% unless Guide.all.count == 0 %>
+          <% if student.guide %>
+
+          <td class="px-4 py-2 border border-gray-300">
+            <%= form_with(url: update_mini_guides_path, method: :post, local: true) do |f| %>
+            <%= f.hidden_field :guide_id, value: student.guide.id if student.guide %>
+            <%= f.hidden_field :student_id, value: student.id %>
+
+
+            <%= f.submit "Mini", class: "ml-2 bg-red-600 text-white p-1 hover:cursor-pointer" %>
+
+            <% end %>
+            <% end %>
+          </td>
+
+          <td class="px-4 py-2 border border-gray-300">
+            <%= form_with(url: update_major_guides_path, method: :post, local: true) do |f| %>
+            <%= f.hidden_field :guide_id, value: student.guide.id if student.guide %>
+            <%= f.hidden_field :student_id, value: student.id %>
+
+
+            <%= f.submit "Major", class: "ml-2 bg-red-600 text-white p-1 hover:cursor-pointer" %>
+
+            <% end %>
+          </td>
+          <% end %>
+          <% end %>
+
+
+          <% end %>
+
 
 
         </tr>

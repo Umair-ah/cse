@@ -1,8 +1,12 @@
 class ProjectsController < ApplicationController
 
   def index
+    begin
     guide = Guide.find(session[:guide_id])
     @students_of_guide = guide.students.order(created_at: :desc)
+    rescue StandardError => e
+      redirect_to root_path, alert: "NO GUIDES: Tell the admin to upload students guide list"
+    end
   end
 
   def new

@@ -3,6 +3,7 @@ class BatchesController < ApplicationController
   before_action :authenticate_user!, except: %i[ show index ]
 
 
+
   # GET /batches or /batches.json
   def index
     @batches = Batch.all

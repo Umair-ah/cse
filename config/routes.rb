@@ -13,6 +13,11 @@ Rails.application.routes.draw do
       get :display_guides
       get :guide_login
       get :guide_logged_in
+      post :clean
+      post :update_guide
+      post :update_mini
+      post :update_major
+
     end
   end
   
