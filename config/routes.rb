@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :projects, except: :show
+
   resources :guides, only: %i[show create destroy] do
     collection do
       post :upload

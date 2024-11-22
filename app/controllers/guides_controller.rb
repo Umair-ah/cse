@@ -37,6 +37,9 @@ class GuidesController < ApplicationController
               guide.password = "pda123"
             end
             StudentsGuide.find_or_create_by!(student: student, guide: guide)
+            Project.create!(title: "Mini Project", student: student)
+            Project.create!(title: "Major Project", student: student)
+
           rescue ActiveRecord::RecordNotFound
             Rails.logger.warn "Student with USN #{usn} not found"
           rescue ActiveRecord::RecordInvalid => e
@@ -83,7 +86,7 @@ class GuidesController < ApplicationController
     puts "#{guide.name}"
     if guide&.authenticate(params[:password])
       session[:guide_id] = guide.id
-      redirect_to root_path, notice: "Logged in successfully."
+      redirect_to projects_path, notice: "Logged in successfully."
     else
       flash[:alert] = "Invalid password."
       render :guide_login
