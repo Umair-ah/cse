@@ -37,8 +37,10 @@ class GuidesController < ApplicationController
               guide.password = "pda123"
             end
             StudentsGuide.find_or_create_by!(student: student, guide: guide)
-            Project.create!(title: "Mini Project", student: student)
-            Project.create!(title: "Major Project", student: student)
+            mini_project = Project.find_or_create_by!(title: "Mini Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
+            major_project = Project.find_or_create_by!(title: "Major Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
+            StudentsProject.find_or_create_by!(student: student, project: mini_project)
+            StudentsProject.find_or_create_by!(student: student, project: major_project)
 
           rescue ActiveRecord::RecordNotFound
             Rails.logger.warn "Student with USN #{usn} not found"

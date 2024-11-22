@@ -10,7 +10,7 @@ class BatchesController < ApplicationController
 
   # GET /batches/1 or /batches/1.json
   def show
-    @batch_students = @batch.students
+    @batch_students = @batch.students.order(:usn)
   end
 
   def upload

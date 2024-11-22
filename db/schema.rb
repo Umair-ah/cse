@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_22_005708) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_22_035156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -122,6 +122,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_22_005708) do
     t.bigint "batch_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "mini", precision: 3, scale: 1
+    t.decimal "major", precision: 3, scale: 1
     t.index ["batch_id"], name: "index_students_on_batch_id"
   end
 
@@ -132,6 +134,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_22_005708) do
     t.datetime "updated_at", null: false
     t.index ["guide_id"], name: "index_students_guides_on_guide_id"
     t.index ["student_id"], name: "index_students_guides_on_student_id"
+  end
+
+  create_table "students_projects", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_students_projects_on_project_id"
+    t.index ["student_id"], name: "index_students_projects_on_student_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -152,4 +163,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_22_005708) do
   add_foreign_key "students", "batches"
   add_foreign_key "students_guides", "guides"
   add_foreign_key "students_guides", "students"
+  add_foreign_key "students_projects", "projects"
+  add_foreign_key "students_projects", "students"
 end

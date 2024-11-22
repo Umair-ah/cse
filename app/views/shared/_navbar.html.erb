@@ -36,11 +36,11 @@
         </div>
       </div>
       <% if session[:guide_id] %>
-      <%= link_to "My Students", display_students_of_guide_guides_path, class:"hover:text-gray-600" %>
-      <%= button_to "Log Out", guide_path(session[:guide_id]), method: :delete %>
+      <%= link_to "My Students", projects_path, class:"bg-cyan-500 p-2 text-white" %>
+      <%= button_to "Log Out", guide_path(session[:guide_id]), method: :delete, class:"bg-red-500 p-2 text-white" %>
       <% else %>
 
-      <%= link_to "Guides Only", display_guides_guides_path, class:"hover:text-gray-600" %>
+      <%= link_to "Guides Only", display_guides_guides_path, class:"hover:text-gray-600", class:"bg-cyan-500 p-2 text-white" %>
       <% end %>
       <%= session[:guide_id] %>
 

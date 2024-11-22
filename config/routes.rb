@@ -13,7 +13,6 @@ Rails.application.routes.draw do
       get :display_guides
       get :guide_login
       get :guide_logged_in
-      get :display_students_of_guide
     end
   end
   
