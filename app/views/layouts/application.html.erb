@@ -18,18 +18,10 @@
 </head>
 
 <body>
-  <% if notice.present? %>
-  <div class="mb-4 px-4 py-3 bg-green-100 text-green-800 border border-green-200 rounded-md">
-    <%= notice %>
-  </div>
-  <% elsif alert.present? %>
-  <div class="mb-4 px-4 py-3 bg-red-100 text-red-800 border border-red-200 rounded-md">
-    <%= alert %>
-  </div>
-  <% end %>
 
 
   <%= render "shared/navbar" %>
+  <%= render "shared/flash_messages" %>
   <%= yield %>
 </body>
 

@@ -1,6 +1,6 @@
 class BatchesController < ApplicationController
   before_action :set_batch, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: %i[ show index ]
+  before_action :authenticate_user!, except: %i[ show index search ]
 
 
   def search
@@ -18,7 +18,7 @@ class BatchesController < ApplicationController
         end
       end
     rescue StandardError => e
-      redirect_to batches_path, alert: "Not FOund"
+      redirect_to batches_path, alert: "Nothing Found!"
     end
 
   end 
@@ -36,32 +36,36 @@ class BatchesController < ApplicationController
   end
 
   def upload
-    if params[:file].present?
-      file = params[:file]
-      spreadsheet = Roo::Spreadsheet.open(file.path)
-  
-  
-      # Assuming the first row contains headers, start from the second row
-      (2..spreadsheet.last_row).each do |i|
-        row_data = spreadsheet.row(i)
-  
-        # Extract USN and NAME from the current row
-        usn = row_data[1] # Assuming USN is in the second column (index 1)
-        name = row_data[2] # Assuming NAME is in the third column (index 2)
+    begin
+      if params[:file].present?
+        file = params[:file]
+        spreadsheet = Roo::Spreadsheet.open(file.path)
+    
+    
+        # Assuming the first row contains headers, start from the second row
+        (2..spreadsheet.last_row).each do |i|
+          row_data = spreadsheet.row(i)
+    
+          # Extract USN and NAME from the current row
+          usn = row_data[1] # Assuming USN is in the second column (index 1)
+          name = row_data[2] # Assuming NAME is in the third column (index 2)
 
-  
-        # Check if both USN and NAME are present
-        if usn.present? && name.present?
-          student = Student.find_or_create_by!(usn: usn&.to_s&.strip&.upcase, name: name&.to_s&.strip&.upcase, batch_id: params[:batch_id])
+    
+          # Check if both USN and NAME are present
+          if usn.present? && name.present?
+            student = Student.find_or_create_by!(usn: usn&.to_s&.strip&.upcase, name: name&.to_s&.strip&.upcase, batch_id: params[:batch_id])
+          end
         end
+    
+        flash[:notice] = "File uploaded successfully!"
+      else
+        flash[:alert] = "Please upload a file."
       end
-  
-      flash[:notice] = "File uploaded successfully!"
-    else
-      flash[:alert] = "Please upload a file."
+    
+      redirect_to batch_path(params[:batch_id])
+    rescue ArgumentError => e
+      redirect_to batch_path(params[:batch_id]), alert: "Enter Excel Format Only"
     end
-  
-    redirect_to batch_path(params[:batch_id])
   end
   
 
