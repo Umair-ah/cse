@@ -27,7 +27,7 @@ class BatchesController < ApplicationController
 
   # GET /batches or /batches.json
   def index
-    @batches = Batch.all
+    @batches = Batch.all.order(:year)
   end
 
   # GET /batches/1 or /batches/1.json

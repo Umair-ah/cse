@@ -19,7 +19,7 @@ class AdministrationsController < ApplicationController
 
     respond_to do |format|
       if @administration.save
-        format.html { redirect_to request.referrer, notice: "Administration was successfully created." }
+        format.html { redirect_to static_administration_path, notice: "Administration was successfully created." }
         format.json { render :show, status: :created, location: @administration }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -1,44 +1,43 @@
 <%= form_with(model: administration, class: "max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6") do |form| %>
-  <% if administration.errors.any? %>
-    <div class="mb-4 text-red-600">
-      <h2 class="text-lg font-semibold"><%= pluralize(administration.errors.count, "error") %> prohibited this administration from being saved:</h2>
-      <ul class="list-disc list-inside">
-        <% administration.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="mb-4">
-    <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
-  </div>
-
-  <div class="mb-4">
-    <%= form.label :degree, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :degree, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
-  </div>
-
-  <div class="mb-4">
-    <%= form.label :department, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :department, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
-  </div>
-
-  <div class="mb-4">
-    <%= form.label :position, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :position, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
-  </div>
-
-  <div class="mb-4">
-    <%= form.label :image, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.file_field :image, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
-  </div>
-
-  <div>
-    <%= form.submit "Submit", class: "w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
-  </div>
-  <%= link_to "back", static_administration_path, class:"text-gray-600 text-center text-lg"%>
-
+<% if administration.errors.any? %>
+<div class="mb-4 text-red-600">
+  <h2 class="text-lg font-semibold"><%= pluralize(administration.errors.count, "error") %> prohibited this administration from being saved:</h2>
+  <ul class="list-disc list-inside">
+    <% administration.errors.each do |error| %>
+    <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
 
+<div class="mb-4">
+  <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-cyan-500 focus:ring-cyan-500" %>
+</div>
+
+<div class="mb-4">
+  <%= form.label :degree, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_field :degree, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-cyan-500 focus:ring-cyan-500" %>
+</div>
+
+<div class="mb-4">
+  <%= form.label :department, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_field :department, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-cyan-500 focus:ring-cyan-500" %>
+</div>
+
+<div class="mb-4">
+  <%= form.label :position, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_field :position, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-cyan-500 focus:ring-cyan-500" %>
+</div>
+
+<div class="mb-4">
+  <%= form.label :image, class: "block text-sm font-medium text-gray-700" %>
+  <%= form.file_field :image, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-cyan-500 focus:ring-cyan-500" %>
+</div>
+
+<div>
+  <%= form.submit "Submit", class: "w-full inline-flex justify-center rounded-md border border-transparent bg-cyan-600 py-2 px-4 text-sm font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2" %>
+</div>
+<%= link_to "back", static_administration_path, class:"text-gray-600 text-center text-lg"%>
+
+<% end %>

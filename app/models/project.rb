@@ -1,8 +1,8 @@
 class Project < ApplicationRecord
   belongs_to :student
 
-  has_many :students_project
-  has_many :students, through: :students_project
+  has_many :students_project, dependent: :destroy
+  has_many :students, through: :students_project, dependent: :destroy
 
   validates :mark1, :mark2, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5, 
     message: "should be between 0 and 5" }

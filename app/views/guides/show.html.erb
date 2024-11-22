@@ -28,3 +28,14 @@
 
   </div>
 </div>
+
+<% if flash[:uploaded_usns].present? %>
+<div class="mb-4 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded">
+  <h3 class="font-bold mb-2">Uploaded USNs:</h3>
+  <ul>
+    <% flash[:uploaded_usns].each do |usn| %>
+    <li><%= usn %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

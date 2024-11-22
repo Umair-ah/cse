@@ -1,52 +1,51 @@
 <div class="relative top-20">
   <% if current_user %>
-    <div class="grid place-items-center">
-      <%= link_to "Add Faculty", new_faculty_path, class:"p-2 rounded-lg bg-rose-500 hover:bg-rose-700 transition:ease-in duration-300 text-white my-3" %>
-    </div>
+  <div class="grid place-items-center">
+    <%= link_to "Add Faculty", new_faculty_path, class:"p-2 rounded-lg bg-cyan-500 hover:bg-cyan-700 transition:ease-in duration-300 text-white my-3" %>
+  </div>
   <% end %>
   <h1 class="text-4xl font-extrabold text-center mb-12 text-gray-900">Meet Our Faculty</h1>
 
   <div id="faculties" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto px-6">
     <% @faculties.each do |faculty| %>
-      <div class="border overflow-hidden transition-transform transform hover:scale-105">
-        <% if faculty.image %>
-          <div class="flex justify-center mt-6">
-            <%= image_tag(faculty.image, class: "w-24 h-24 rounded-full object-cover border-4 border-gray-500") %>
+    <div class="border-y-4 border-cyan-500 shadow-lg rounded-lg p-6 space-y-4 my-5 overflow-hidden transition-transform transform hover:scale-105 transition:ease-out duration-700">
+      <% if faculty.image %>
+      <div class="flex justify-center mt-6">
+        <%= image_tag(faculty.image, class: "w-24 h-24 rounded-full object-cover border-4 border-cyan-500") %>
+      </div>
+      <% end %>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center"><%= faculty.name %></h2>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span><strong>Position:</strong></span>
+            <span class="font-medium"><%= faculty.position %></span>
           </div>
-        <% end %>
-        <div class="p-6">
-          <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center"><%= faculty.name %></h2>
-          
-          <div class="space-y-2">
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span><strong>Position:</strong></span>
-              <span class="font-medium"><%= faculty.position %></span>
-            </div>
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span><strong>Degree:</strong></span>
-              <span class="font-medium"><%= faculty.degree %></span>
-            </div>
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span><strong>AICTE ID:</strong></span>
-              <span class="font-medium"><%= faculty.aicte_id %></span>
-            </div>
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span><strong>Email:</strong></span>
-              <span>
-                <%= mail_to faculty.mail, faculty.mail, class: "text-indigo-600 underline hover:text-indigo-800" %>
-              </span>
-            </div>
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span><strong>Experience:</strong></span>
-              <span class="font-medium"><%= faculty.experience %> years</span>
-            </div>
-            <% if current_user %>
-              <%= link_to "Edit", edit_faculty_path(faculty), class:"text-red-500 font-medium" %>
-            <% end %>
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span><strong>Degree:</strong></span>
+            <span class="font-medium"><%= faculty.degree %></span>
           </div>
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span><strong>AICTE ID:</strong></span>
+            <span class="font-medium"><%= faculty.aicte_id %></span>
+          </div>
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span><strong>Email:</strong></span>
+            <span>
+              <%= mail_to faculty.mail, faculty.mail, class: "text-indigo-600 underline hover:text-indigo-800" %>
+            </span>
+          </div>
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span><strong>Experience:</strong></span>
+            <span class="font-medium"><%= faculty.experience %> years</span>
+          </div>
+          <% if current_user %>
+          <%= link_to "Edit", edit_faculty_path(faculty), class:"text-red-500 font-medium" %>
+          <% end %>
         </div>
       </div>
+    </div>
     <% end %>
   </div>
 </div>
-

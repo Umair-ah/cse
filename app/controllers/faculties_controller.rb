@@ -23,7 +23,7 @@ class FacultiesController < ApplicationController
 
     respond_to do |format|
       if @faculty.save
-        format.html { redirect_to @faculty, notice: "Faculty was successfully created." }
+        format.html { redirect_to faculties_path, notice: "Faculty was successfully created." }
         format.json { render :show, status: :created, location: @faculty }
       else
         format.html { render :new, status: :unprocessable_entity }

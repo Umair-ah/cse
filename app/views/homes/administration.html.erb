@@ -1,39 +1,38 @@
 <div class="relative top-20">
   <% if current_user %>
-    <div class="grid place-items-center">
-      <%= link_to "Add Administration", new_administration_path, class:"p-2 rounded-lg bg-rose-500 hover:bg-rose-700 transition:ease-in duration-300 text-white my-3" %>
-    </div>
+  <div class="grid place-items-center">
+    <%= link_to "Add Administration", new_administration_path, class:"p-2 rounded-lg bg-cyan-500 hover:bg-cyan-700 transition:ease-in duration-300 text-white my-3" %>
+  </div>
   <% end %>
   <h1 class="text-4xl font-extrabold text-center mb-12 text-gray-900">Administration</h1>
 
   <div id="faculties" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto px-6">
-     <% @administrations.each do |administration| %>
-      <div class="border overflow-hidden transition-transform transform hover:scale-105">
-        <% if administration.image.attached? %>
-          <div class="flex justify-center mt-6">
-            <%= image_tag(administration.image, alt: administration.name, class: "w-24 h-24 rounded-full object-cover border-4 border-gray-500") %>
+    <% @administrations.each do |administration| %>
+    <div class="border-y-4 border-cyan-500 shadow-lg rounded-lg p-6 space-y-4 my-5 overflow-hidden transition-transform transform hover:scale-105 transition:ease-in duration-700">
+      <% if administration.image.attached? %>
+      <div class="flex justify-center mt-6">
+        <%= image_tag(administration.image, alt: administration.name, class: "w-24 h-24 rounded-full object-cover border-4 border-gray-500") %>
+      </div>
+      <% end %>
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center"><%= administration.name %></h2>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span class="font-extrabold"><%= administration.position %></span>
           </div>
-        <% end %>
-        <div class="p-6">
-          <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center"><%= administration.name %></h2>
-          
-          <div class="space-y-2">
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span class="font-extrabold"><%= administration.position %></span>
-            </div>
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span class="font-bold"><%= administration.degree %></span>
-            </div>
-            <div class="flex justify-between text-gray-600 mb-1">
-              <span class="font-medium"><%= administration.department %></span>
-            </div>
-            <% if current_user %>
-              <%= link_to "Edit", edit_administration_path(administration), class:"text-red-500 font-medium" %>
-            <% end %>
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span class="font-bold"><%= administration.degree %></span>
           </div>
+          <div class="flex justify-between text-gray-600 mb-1">
+            <span class="font-medium"><%= administration.department %></span>
+          </div>
+          <% if current_user %>
+          <%= link_to "Edit", edit_administration_path(administration), class:"text-red-500 font-medium" %>
+          <% end %>
         </div>
       </div>
+    </div>
     <% end %>
   </div>
 </div>
-

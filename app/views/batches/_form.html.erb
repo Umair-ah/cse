@@ -1,27 +1,26 @@
 <div class="max-w-lg mx-auto mt-20 p-8 bg-white rounded-lg shadow-lg">
-  <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Create a New Batch</h2>
 
   <%= form_with(model: batch, class: "space-y-6") do |form| %>
-    <% if batch.errors.any? %>
-      <div class="bg-red-100 text-red-700 p-4 rounded-lg">
-        <h3 class="font-medium mb-2"><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h3>
-        <ul class="list-disc list-inside">
-          <% batch.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+  <% if batch.errors.any? %>
+  <div class="bg-red-100 text-red-700 p-4 rounded-lg">
+    <h3 class="font-medium mb-2"><%= pluralize(batch.errors.count, "error") %> prohibited this batch from being saved:</h3>
+    <ul class="list-disc list-inside">
+      <% batch.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
 
-    <!-- Year Input Field -->
-    <div>
-      <%= form.label :year, "Year", class: "block text-gray-700 font-medium mb-2" %>
-      <%= form.number_field :year, class: "w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
-    </div>
+  <!-- Year Input Field -->
+  <div>
+    <%= form.label :year, "Year", class: "block text-gray-700 font-medium mb-2" %>
+    <%= form.number_field :year, class: "w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+  </div>
 
-    <!-- Submit Button -->
-    <div>
-      <%= form.submit "Save Batch", class: "w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-300" %>
-    </div>
+  <!-- Submit Button -->
+  <div>
+    <%= form.submit "Save Batch", class: "w-full bg-cyan-600 text-white py-3 rounded-lg hover:bg-cyan-700 transition duration-300" %>
+  </div>
   <% end %>
 </div>

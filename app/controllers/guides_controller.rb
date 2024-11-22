@@ -104,7 +104,7 @@ class GuidesController < ApplicationController
           end
         end
       end
-      redirect_to request.referrer, notice: "Success!"
+      #redirect_to request.referrer, notice: "Success!"
 
 
     rescue ActiveRecord::NotNullViolation => e
@@ -114,9 +114,24 @@ class GuidesController < ApplicationController
     rescue NameError => e
       flash[:alert] = "Upload Excel Guide List and Select Project Type (Mini or Major)!"
       redirect_to request.referrer
+    ensure
+      if file_path.present?
+        @uploaded_usns = []  # Collect uploaded USNs
+        sheet.each_row_streaming(offset: 1) do |row|
+          usn1 = row[1]&.value&.strip&.upcase
+          next unless usn1.present?
+      
+          begin
+            student = Student.find_by!(usn: usn1)
+            @uploaded_usns << usn1  # Save successfully processed USN
+            # Rest of your logic...
+          rescue ActiveRecord::RecordNotFound
+            Rails.logger.warn "Student with USN #{usn1} not found"
+          end
+        end
+        redirect_to request.referrer, notice: "Upload Complete", flash: { uploaded_usns: @uploaded_usns }
+      end
     end
-
-
   end
 
   def clean
