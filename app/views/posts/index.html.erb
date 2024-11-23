@@ -47,48 +47,53 @@
       </div>
     </div>
 
+
+
+
     <script>
-      // Toggle description script
-      document.getElementById("toggle-description-<%= post.id %>").onclick = function() {
-        const description = document.getElementById("post-description-<%= post.id %>");
-        const fullDescription = "<%= j post.description.to_plain_text %>";
+      document.addEventListener("turbo:load", function() {
+        // Toggle description script
+        document.getElementById("toggle-description-<%= post.id %>").onclick = function() {
+          const description = document.getElementById("post-description-<%= post.id %>");
+          const fullDescription = "<%= j post.description.to_plain_text %>";
 
-        if (description.classList.contains("max-h-16")) {
-          description.classList.remove("max-h-16");
-          description.innerText = fullDescription; // Show full description
-          this.innerText = "Read less";
-        } else {
-          description.classList.add("max-h-16");
-          description.innerText = "<%= truncated_description %>..."; // Show truncated description
-          this.innerText = "Read more...";
+          if (description.classList.contains("max-h-16")) {
+            description.classList.remove("max-h-16");
+            description.innerText = fullDescription; // Show full description
+            this.innerText = "Read less";
+          } else {
+            description.classList.add("max-h-16");
+            description.innerText = "<%= truncated_description %>..."; // Show truncated description
+            this.innerText = "Read more...";
+          }
+        };
+
+        // Carousel slide functions
+        function prevSlide(button) {
+          const carousel = button.parentElement.querySelector('.carousel-wrapper');
+          carousel.scrollLeft -= carousel.offsetWidth; // Adjust scroll left by one width
         }
-      };
 
-      // Carousel slide functions
-      function prevSlide(button) {
-        const carousel = button.parentElement.querySelector('.carousel-wrapper');
-        carousel.scrollLeft -= carousel.offsetWidth; // Adjust scroll left by one width
-      }
+        function nextSlide(button) {
+          const carousel = button.parentElement.querySelector('.carousel-wrapper');
+          carousel.scrollLeft += carousel.offsetWidth; // Adjust scroll right by one width
+        }
 
-      function nextSlide(button) {
-        const carousel = button.parentElement.querySelector('.carousel-wrapper');
-        carousel.scrollLeft += carousel.offsetWidth; // Adjust scroll right by one width
-      }
+        // Modal functions for each post
+        function showModal(postId, imgSrc) {
+          const modal = document.getElementById(`imageModal-${postId}`);
+          const modalImage = document.getElementById(`modalImage-${postId}`);
+          modalImage.src = imgSrc;
+          modal.classList.remove("hidden");
+        }
 
-      // Modal functions for each post
-      function showModal(postId, imgSrc) {
-        const modal = document.getElementById(`imageModal-${postId}`);
-        const modalImage = document.getElementById(`modalImage-${postId}`);
-        modalImage.src = imgSrc;
-        modal.classList.remove("hidden");
-      }
-
-      function closeModal(postId) {
-        const modal = document.getElementById(`imageModal-${postId}`);
-        const modalImage = document.getElementById(`modalImage-${postId}`);
-        modal.classList.add("hidden");
-        modalImage.src = ""; // Clear the image when the modal is closed
-      }
+        function closeModal(postId) {
+          const modal = document.getElementById(`imageModal-${postId}`);
+          const modalImage = document.getElementById(`modalImage-${postId}`);
+          modal.classList.add("hidden");
+          modalImage.src = ""; // Clear the image when the modal is closed
+        }
+      })
     </script>
 
     <% end %>
