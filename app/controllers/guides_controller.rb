@@ -1,5 +1,15 @@
 class GuidesController < ApplicationController
 
+  def remove_project
+    student = Student.find(params[:student_id])
+    #guide = Guide.find(params[:guide_id])
+
+    student.students_project.destroy_all
+    student.projects.destroy_all
+    redirect_to request.referrer, alert: "Removed Project"
+
+  end
+
   def update_major
     student = Student.find(params[:student_id])
     guide = student.guide

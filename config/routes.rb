@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       post :update_mini
       post :update_major
 
+      post :remove_project
+
     end
   end
   

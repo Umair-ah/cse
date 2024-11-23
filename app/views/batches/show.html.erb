@@ -80,6 +80,15 @@
                   <%= f.hidden_field :student_id, value: student.id %>
                   <%= f.submit "Assign Major", class: "bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700" %>
                   <% end %>
+
+                  <% elsif student.projects.present? && Guide.any? %>
+                  <!-- Mini Project Remove -->
+                  <%= form_with(url: remove_project_guides_path, method: :post, local: true) do |f| %>
+                  <%= f.hidden_field :guide_id, value: student.guide.id %>
+                  <%= f.hidden_field :student_id, value: student.id %>
+                  <%= f.submit "Remove Project", class: "bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" %>
+                  <% end %>
+
                   <% end %>
                 </div>
               </td>
