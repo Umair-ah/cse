@@ -1,0 +1,68 @@
+<table class="table-auto w-full border-collapse border border-gray-300 shadow-md">
+  <thead class="bg-cyan-400">
+    <tr>
+      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800 border border-gray-300">USN</th>
+      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800 border border-gray-300">Name</th>
+      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800 border border-gray-300">Mini Project</th>
+      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800 border border-gray-300">Major Project</th>
+      <% if current_user %>
+      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800 border border-gray-300">Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @batch_students.each do |student| %>
+    <tr class="hover:bg-gray-50 transition duration-300">
+      <!-- Student Details -->
+      <td class="px-6 py-4 border border-gray-300 text-sm text-gray-700"><%= student.usn %></td>
+      <td class="px-6 py-4 border border-gray-300 text-sm text-gray-700"><%= student.name %></td>
+      <td class="px-6 py-4 border border-gray-300 text-sm text-gray-700"><%= student.mini %></td>
+      <td class="px-6 py-4 border border-gray-300 text-sm text-gray-700"><%= student.major %></td>
+
+      <% if current_user %>
+      <!-- Actions -->
+      <td class="px-6 py-4 border border-gray-300 text-sm text-gray-700">
+        <div class="space-y-2">
+          <!-- Guide Assignment Form -->
+          <%= form_with(url: update_guide_guides_path, method: :post, local: true) do |f| %>
+          <% if student.guide %>
+          <p class="text-cyan-600 font-medium">Guide: <%= student.guide.name %></p>
+          <% else %>
+          <p class="text-red-600 font-medium">No Guide Assigned</p>
+          <% end %>
+          <%= f.collection_select :guide_id, Guide.order(:name), :id, :name, { prompt: "Assign Guide" }, { class: "border-gray-300 rounded px-2 py-1" } %>
+          <%= f.hidden_field :student_id, value: student.id %>
+          <%= f.submit "Save", class: "mt-1 bg-cyan-600 text-white px-3 py-1 rounded hover:bg-cyan-700" %>
+          <% end %>
+
+          <% if !student.projects.present? && Guide.any? && student.guide %>
+          <!-- Mini Project Assignment -->
+          <%= form_with(url: update_mini_guides_path, method: :post, local: true) do |f| %>
+          <%= f.hidden_field :guide_id, value: student.guide.id %>
+          <%= f.hidden_field :student_id, value: student.id %>
+          <%= f.submit "Assign Mini", class: "bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" %>
+          <% end %>
+
+          <!-- Major Project Assignment -->
+          <%= form_with(url: update_major_guides_path, method: :post, local: true) do |f| %>
+          <%= f.hidden_field :guide_id, value: student.guide.id %>
+          <%= f.hidden_field :student_id, value: student.id %>
+          <%= f.submit "Assign Major", class: "bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700" %>
+          <% end %>
+
+          <% elsif student.projects.present? && Guide.any? %>
+          <!-- Mini Project Remove -->
+          <%= form_with(url: remove_project_guides_path, method: :post, local: true) do |f| %>
+          <%= f.hidden_field :guide_id, value: student.guide.id %>
+          <%= f.hidden_field :student_id, value: student.id %>
+          <%= f.submit "Remove Project", class: "bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" %>
+          <% end %>
+
+          <% end %>
+        </div>
+      </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -108,10 +108,11 @@ class BatchesController < ApplicationController
 
   # DELETE /batches/1 or /batches/1.json
   def destroy
+    Project.destroy_all
     @batch.destroy
 
     respond_to do |format|
-      format.html { redirect_to batches_path, status: :see_other, notice: "Batch was successfully destroyed." }
+      format.html { redirect_to batches_path, status: :see_other, notice: "Batch #{@batch.year}CS was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :administrations, except: %i[index show ]
   resources :posts, except: %i[show ]
   devise_for :users, skip: [:registration]
-  root "homes#index"
+  root "homes#overview"
 
   get "management", to: "homes#management"
   get "institute", to: "homes#institute"

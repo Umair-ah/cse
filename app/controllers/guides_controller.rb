@@ -6,7 +6,19 @@ class GuidesController < ApplicationController
 
     student.students_project.destroy_all
     student.projects.destroy_all
-    redirect_to request.referrer, alert: "Removed Project"
+    #redirect_to request.referrer, alert: "Removed Project"
+    
+    @batch = student.batch
+    @batch_students = @batch.students.order(:usn)
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream:
+        turbo_stream.update(
+          "table",
+          partial: "shared/batch_table",
+        )
+      }
+    end
 
   end
 
@@ -17,9 +29,19 @@ class GuidesController < ApplicationController
     if guide
       project = Project.create!(title: "Major Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
       StudentsProject.create!(student: student, project: project)
-      redirect_to request.referrer, notice: "Updated"
-    else
-      redirect_to request.referrer, alert: "Select Guide"
+      #redirect_to request.referrer, notice: "Updated"
+    end
+
+    @batch = student.batch
+    @batch_students = @batch.students.order(:usn)
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream:
+        turbo_stream.update(
+          "table",
+          partial: "shared/batch_table",
+        )
+      }
     end
 
 
@@ -33,9 +55,18 @@ class GuidesController < ApplicationController
 
       project = Project.create!(title: "Mini Project", student: student, mark1: 0, mark2: 0, mark3: 0, mark4: 0, mark5: 0, mark6: 0, mark7: 0, mark8: 0, mark9: 0, mark10: 0)
       StudentsProject.create!(student: student, project: project)
-      redirect_to request.referrer, notice: "Updated"
-    else
-      redirect_to request.referrer, alert: "Select Guide"
+      #redirect_to request.referrer, notice: "Updated"
+    end
+    @batch = student.batch
+    @batch_students = @batch.students.order(:usn)
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream:
+        turbo_stream.update(
+          "table",
+          partial: "shared/batch_table",
+        )
+      }
     end
 
 
@@ -51,7 +82,18 @@ class GuidesController < ApplicationController
       StudentsGuide.create!(student: student, guide: guide)
 
     end
-    redirect_to request.referrer, notice: "Updated"
+    #redirect_to request.referrer, notice: "Updated"
+    @batch = student.batch
+    @batch_students = @batch.students.order(:usn)
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream:
+        turbo_stream.update(
+          "table",
+          partial: "shared/batch_table",
+        )
+      }
+    end
 
   end
 
